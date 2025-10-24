@@ -1,12 +1,10 @@
 workflows:
-  ios-app:
-    name: Build iOS app
+  ios-debug:
+    name: Build iOS Debug App
     environment:
       vars:
         XCODE_PROJECT: "Ex 3/Ex 3/Ex 3.xcodeproj"
         XCODE_SCHEME: "Ex 3"
-      xcode: latest
-
     scripts:
       - name: Install dependencies
         script: |
@@ -15,8 +13,7 @@ workflows:
             pod install
             cd ../..
           fi
-
-            - name: Build iOS app
+      - name: Build iOS app
         script: |
           xcodebuild \
             -project "$XCODE_PROJECT" \
@@ -28,15 +25,9 @@ workflows:
             CODE_SIGNING_ALLOWED=NO \
             -archivePath build/Ex3.xcarchive \
             archive
-
-
-      - name: Export .ipa file
-        script: |
-          xcodebuild \
-            -exportArchive \
-            -archivePath build/Ex3.xcarchive \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath build
-
     artifacts:
-      - build/*.ipa
+      - build/Ex3.xcarchive
+    publishing:
+      email:
+        recipients:
+          - your@email.com
