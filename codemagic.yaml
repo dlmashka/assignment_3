@@ -29,3 +29,44 @@ workflows:
       email:
         recipients:
           - your@email.com
+
+workflows:
+  ios-build:
+    name: iOS Build
+    max_build_duration: 60
+    environment:
+      xcode: 16.4
+      vars:
+        XCODE_PROJECT: "Ex 3/Ex 3/Ex 3.xcodeproj"
+        XCODE_SCHEME: "Ex 3"
+    scripts:
+      - name: Install dependencies
+        script: |
+          if [ -f "Ex 3/Ex 3/Podfile" ]; then
+            cd Ex 3/Ex 3
+            pod install
+            cd ..
+          fi
+
+      - name: Build iOS app
+        script: |
+          mkdir -p build-output
+          xcodebuild -project "$XCODE_PROJECT" \
+          -scheme "$XCODE_SCHEME" \
+          -sdk iphonesimulator \
+          -configuration Debug \
+          -derivedDataPath build-output \
+          build
+
+          # Скопируем .app в удобную папку
+          find build-output -type d -name "*.app" -exec cp -R {} ./build-output/ \;
+
+    artifacts:
+      - build-output/*.app
+
+    publishing:
+      email:
+        recipients:
+          - your@email.com
+
+
