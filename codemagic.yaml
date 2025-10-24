@@ -1,14 +1,21 @@
 workflows:
   ios-build:
     name: iOS Build
-    max_build_duration: 30
+    max_build_duration: 60
     environment:
-      xcode: latest
+      xcode: 16.4
       vars:
-        XCODE_PROJECT: "Ex-3/Ex-3./Ex-3.xcodeproj"
+        XCODE_PROJECT: "Ex-3/Ex-3/Ex-3.xcodeproj"
         XCODE_SCHEME: "Ex-3"
-      cocoapods: default
     scripts:
+      - name: Install dependencies
+        script: |
+          # Install CocoaPods if needed
+          if [ -f "Ex-3/Ex-3/Podfile" ]; then
+            cd Ex-3/Ex-3
+            pod install
+            cd ../..
+          fi
       - name: Build iOS app
         script: |
           xcodebuild -project "$XCODE_PROJECT" \
@@ -17,7 +24,8 @@ workflows:
           -configuration Debug \
           build
     artifacts:
-      - build/**/Build/Products/**/*.app
-    triggering:
-      events:
-        - push
+      - build/ios/Debug-iphonesimulator/*.app
+    publishing:
+      email:
+        recipients:
+          - your@email.com
