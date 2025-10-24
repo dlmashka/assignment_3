@@ -5,14 +5,14 @@ workflows:
     environment:
       xcode: 16.4
       vars:
-        XCODE_PROJECT: "Ex-3/Ex-3/Ex-3.xcodeproj"
-        XCODE_SCHEME: "Ex-3"
+        XCODE_PROJECT: "Ex 3/Ex 3/Ex 3.xcodeproj"
+        XCODE_SCHEME: "Ex 3"
     scripts:
       - name: Install dependencies
         script: |
           # Install CocoaPods if needed
-          if [ -f "Ex-3/Ex-3/Podfile" ]; then
-            cd Ex-3/Ex-3
+          if [ -f "Ex 3/Ex 3/Podfile" ]; then
+            cd Ex 3/Ex 3
             pod install
             cd ../..
           fi
