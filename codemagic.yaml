@@ -6,7 +6,7 @@ workflows:
       xcode: latest
       vars:
         XCODE_PROJECT: "Ex-3/Ex-3./Ex-3.xcodeproj"
-        XCODE_SCHEME: "Ex_3"
+        XCODE_SCHEME: "Ex-3"
       cocoapods: default
     scripts:
       - name: Build iOS app
